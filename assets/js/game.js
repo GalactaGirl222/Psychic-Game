@@ -6,40 +6,77 @@
 // Your Guesses So Far: (the specific letters that the user typed. Display these until the user either wins or loses.)
 // When the player wins, increase the Wins counter and start the game over again (without refreshing the page).
 // When the player loses, increase the Losses counter and restart the game without a page refresh (just like when the user wins).
-
-let userGuess =[];
-let randomLetterArray=[];
-let userKey;
-let randomLetter;
-
 let wins = 0;
 let losses = 0;
 let guessesLeft = [10];
-guessesMade = "";
+let guessesSoFar = "";
+
+let userGuess = [];
+let randomLetterArray = [];
+let userKey;
+let randomLetter;
+
 
 
 // showing display and score count
-const showWins = document.getElementById("wins");
-showWins.textContent = wins;
- 
-const showLosses = document.getElementById("Losses");
-showLosses.textContent = losses;
+const displayWins = document.getElementById("wins");
+displayWins.textContent = wins;
 
-const showGuessesLeft = document.getElementById("guessesLeft");
-showGuessesLeft.textContent = guessesLeft;
+const displayLosses = document.getElementById("losses");
+displayLosses.textContent = losses;
 
-const showGuessesMade = document.getElementById("guessesMade");
-showGuessesMade.textContent = guessesMade;
+const displayGuessesLeft = document.getElementById("guesses-left");
+displayGuessesLeft.textContent = guessesLeft;
+
+const displayGuessesSoFar = document.getElementById("guesses-so-far");
+displayGuessesSoFar.textContent = guessesSoFar;
 
 // random letter 
-function userGuessArray(){
-    userGuessArray = [];
-    let alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", 
-    "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+function init() {
+    userGuess = [];
+    let alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+        "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-    randomLetter = alphabet[Math.floor((math.floor() * alphabet.length))];
+    randomLetter = alphabet[Math.floor((Math.floor() * alphabet.length))];
     console.log("random Letter: " + randomLetter);
 
     randomLetterArray[0] = randomLetter;
     console.log(randomLetterArray);
+}
+
+init();
+
+document.onkeydown = function (){
+    userKey = event.key;
+    //stores key press in array
+    userGuess.push(" " + userKey);
+    displayGuessesSoFar.textContent = guessesLeft;
+    // print keys pressed 
+    displayGuessesSoFar.text = userGuess;
+
+    guessesLeft = guessesLeft -1;
+    displayGuessesLeft.textContent = userGuess;
+    //compares user key press to random letter
+
+    if (randomLetter === userKey) {
+        wins++;
+        displayWins.textContent = guessesLeft;
+        init();
+        guessesLeft = [10];
+        displayGuessesLeft.textContent = guessesLeft;
+    }
+
+    else {
+        console.log("different letter");
+    }
+    if (guessesLeft === 0) {
+        init();
+        alert("Better luck Next time!")
+        losses++;
+        displayLosses.textContent = losses;
+        guessesLeft = [10];
+        displayGuessesLeft.textContent = guessesLeft
+    }
+    
+
 }
